@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.Json;
 namespace fileManager
 {
     class Program
@@ -26,73 +27,20 @@ namespace fileManager
                 создать парсер команд, который по минимуму использует стандартные методы по строкам.
              */
 
+            
+            string lastWay = @"path.json";
+            //если десериализация не пустая:
+            if (File.Exists(lastWay))
+            {
+                Catalog catalog = new Catalog(lastWay);
+                catalog.Display(lastWay);
+            }
             //если десериализация пустая:
-            List<string> drivesName = new List<string>();
-            //получаем список дисков
-            var drives = DriveInfo.GetDrives();
-
-            for (int i = 0; i < drives.Length; i++)
-            {
-                drivesName.Add(drives[i].RootDirectory.Name);
-            }
-            //Console.WriteLine("подключенные диски");
-            //foreach (var name in drivesName)
-            //{
-            //    Console.WriteLine(name);
-            //}
-            //получаем список каталогов для каждого диска
-            int index = 0;
-            List<string> listOfDir = new List<string>();
-            listOfDir = WalkTree(listOfDir, drivesName, index);
-            string currentDisk = drivesName[0];
-            Display(drivesName, listOfDir, currentDisk);
-            currentDisk = drivesName[1];
-            Display(drivesName, listOfDir, currentDisk);
-            currentDisk = drivesName[2];
-            Display(drivesName, listOfDir, currentDisk);
-        }
-
-        private static void Display(List<string> drivesName, List<string> listOfDir, string currentDisk)
-        {
-            Console.Clear();
-            foreach (var disk in drivesName)
-            {
-                Console.WriteLine(disk);
-                if (disk == currentDisk)
-                {
-                    foreach (var dir in listOfDir)
-                    {
-                        if (dir.Contains(disk))
-                        {
-                            DirectoryInfo checkDir = new DirectoryInfo(dir);
-                            if ((checkDir.Attributes & FileAttributes.Hidden) == 0)
-                                Console.WriteLine($"\t {dir}");
-                        }
-                    }
-                }
-            }
-        }
-
-        public static List<string> WalkTree(List<string> dir, List<string> paths, int index)
-        {
-            string currentDir = paths[index];
-            try
-            {
-                string[] allDirectories = Directory.GetDirectories(currentDir);
-                for (int i = 0; i < allDirectories.Length; i++)
-                {
-                    dir.Add(allDirectories[i]);
-                }
-            }
-            catch
-            {
-                dir.Add("Access denied");
-            }
-
-            if (index == paths.Count - 1)
-                return dir;
             else
-                return WalkTree(dir, paths, index + 1);
+            {
+                Catalog catalog = new Catalog();
+                catalog.Display();
+            }
         }
     }
 }
