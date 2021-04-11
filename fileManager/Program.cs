@@ -27,21 +27,33 @@ namespace fileManager
                 создать парсер команд, который по минимуму использует стандартные методы по строкам.
              */
 
-            
+            Console.SetWindowSize(81, 25);
+            Console.SetBufferSize(81, 25);
             string lastWay = @"path.json";
-            Catalog catalog;
+            Drives catalog;
             //если десериализация не пустая:
             if (File.Exists(lastWay))
             {
-                catalog = new Catalog(lastWay);
+                catalog = new Drives(lastWay);
             }
             //если десериализация пустая:
             else
             {
-                catalog = new Catalog();
+                catalog = new Drives();
             }
-            catalog.Display();
-            Windows windows = new Windows();
+            int width = Console.BufferWidth;
+            int height = Console.BufferHeight;
+            catalog.Display(width, height);
+            while (true)
+            {
+                if (Console.KeyAvailable)
+                {
+
+                }
+            }
+
+
+            Console.ReadKey();
         }
     }
 
