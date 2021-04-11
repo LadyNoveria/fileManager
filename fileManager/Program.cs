@@ -29,18 +29,20 @@ namespace fileManager
 
             
             string lastWay = @"path.json";
+            Catalog catalog;
             //если десериализация не пустая:
             if (File.Exists(lastWay))
             {
-                Catalog catalog = new Catalog(lastWay);
-                catalog.Display(lastWay);
+                catalog = new Catalog(lastWay);
             }
             //если десериализация пустая:
             else
             {
-                Catalog catalog = new Catalog();
-                catalog.Display();
+                catalog = new Catalog();
             }
+            catalog.Display();
+            Windows windows = new Windows();
         }
     }
+
 }
