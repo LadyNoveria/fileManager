@@ -6,24 +6,34 @@ namespace fileManager
 {
     class Directories
     {
-        List<string> directories;
+        private List<string> directories;
+        private string currentDirectory;
 
-        public Directories(string path)
+        public Directories(string drive, string directory)
         {
             directories = new List<string>();
-            string[] allDirectories = Directory.GetDirectories(path);
+            string[] allDirectories = Directory.GetDirectories(drive);
             for (int i = 0; i < allDirectories.Length; i++)
             {
                 directories.Add(allDirectories[i]);
             }
-        }
-        public void Display(int mapWidth) {
-            int y = 0;
-            foreach (var file in directories)
+            if (directory != null)
             {
-                //int x = mapWidth / 3;
+                currentDirectory = directory;
+            }
+        }
+        public void Display() {
+            int y = 0;
+            foreach (var dir in directories)
+            {
                 Console.SetCursorPosition(10, y);
-                Console.WriteLine($"{file}");
+                if (dir == currentDirectory)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(dir);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                Console.WriteLine($"{dir}");
                 y++;
             }
         }

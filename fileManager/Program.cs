@@ -30,28 +30,19 @@ namespace fileManager
             Console.SetWindowSize(81, 25);
             Console.SetBufferSize(81, 25);
             string lastWay = @"path.json";
-            Drives catalog;
+            Tree tree;
             //если десериализация не пустая:
             if (File.Exists(lastWay))
             {
-                catalog = new Drives(lastWay);
+                tree = new Tree(lastWay);
             }
             //если десериализация пустая:
             else
             {
-                catalog = new Drives();
-            }
-            int width = Console.BufferWidth;
-            int height = Console.BufferHeight;
-            catalog.Display(width, height);
-            while (true)
-            {
-                if (Console.KeyAvailable)
-                {
-
-                }
+                tree = new Tree();
             }
 
+            tree.Display();
 
             Console.ReadKey();
         }
