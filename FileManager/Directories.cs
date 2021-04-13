@@ -15,7 +15,9 @@ namespace fileManager
             string[] allDirectories = Directory.GetDirectories(drive);
             for (int i = 0; i < allDirectories.Length; i++)
             {
-                directories.Add(allDirectories[i]);
+                DirectoryInfo dir = new DirectoryInfo(allDirectories[i]);
+                if ((dir.Attributes & FileAttributes.Hidden) == 0)
+                    directories.Add(allDirectories[i]);
             }
             if (directory != null)
             {
@@ -26,7 +28,7 @@ namespace fileManager
             int y = 0;
             foreach (var dir in directories)
             {
-                Console.SetCursorPosition(10, y);
+                Console.SetCursorPosition(5, y);
                 if (dir == currentDirectory)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;

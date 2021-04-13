@@ -17,7 +17,7 @@ namespace fileManager
                 currentDrive = driveName;
             }
             else
-                currentDrive = drivesName[0];
+                currentDrive = drivesName[1];
         }
         //Получение доступных дисков
         private void GetDrives()

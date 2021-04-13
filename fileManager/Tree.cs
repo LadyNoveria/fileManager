@@ -38,7 +38,7 @@ namespace fileManager
             Console.Clear();
             Drives drives = new Drives(currentDrive);
             Directories directories = new Directories(currentDrive, currentDirectory);
-            Files files = new Files(currentDirectory, currentFile);
+            Files files = new Files(currentDrive, currentFile);
             drives.Display();
             directories.Display();
             files.Display();
