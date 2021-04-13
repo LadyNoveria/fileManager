@@ -8,8 +8,7 @@ namespace fileManager
     {
         private List<string> directories;
         private string currentDirectory;
-
-        public Directories(string drive, string directory)
+        public Directories(string drive)
         {
             directories = new List<string>();
             string[] allDirectories = Directory.GetDirectories(drive);
@@ -19,25 +18,27 @@ namespace fileManager
                 if ((dir.Attributes & FileAttributes.Hidden) == 0)
                     directories.Add(allDirectories[i]);
             }
-            if (directory != null)
-            {
-                currentDirectory = directory;
-            }
+            if (directories.Count != 0) 
+                currentDirectory = directories[0];
         }
-        public void Display() {
-            int y = 0;
+        public string GetRoot()
+        {
+            return currentDirectory;
+        }
+        public void Display()
+        {
             foreach (var dir in directories)
             {
-                Console.SetCursorPosition(5, y);
-                if (dir == currentDirectory)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(dir);
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                Console.WriteLine($"{dir}");
-                y++;
+                if(dir != currentDirectory)
+                    Console.WriteLine($"{dir}");
             }
         }
+        public void Display(string str)
+        {
+            foreach (var dir in directories)
+            {
+                Console.WriteLine($"{str}{dir}");
+            }
+        } 
     }
 }

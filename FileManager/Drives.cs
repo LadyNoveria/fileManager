@@ -8,16 +8,15 @@ namespace fileManager
         private List<string> drivesName; //список дисков
         public string currentDrive;
 
-        public Drives(string driveName)
+        public Drives()
         {
             drivesName = new List<string>();
             GetDrives();
-            if (driveName != null)
-            {
-                currentDrive = driveName;
-            }
-            else
-                currentDrive = drivesName[1];
+            currentDrive = drivesName[0];
+        }
+        public string GetCurrentDrive()
+        {
+            return currentDrive;
         }
         //Получение доступных дисков
         private void GetDrives()
@@ -31,19 +30,19 @@ namespace fileManager
                 }
             }
         }
-        public void Display()
-        {
-            foreach (var drive in drivesName)
-            {
-                if (drive == currentDrive)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(drive);
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                    Console.WriteLine($"{drive}");
-            }
-        }
+        //public void Display()
+        //{
+        //    foreach (var drive in drivesName)
+        //    {
+        //        if (drive == currentDrive)
+        //        {
+        //            Console.ForegroundColor = ConsoleColor.Red;
+        //            Console.WriteLine(drive);
+        //            Console.ForegroundColor = ConsoleColor.White;
+        //        }
+        //        else
+        //            Console.WriteLine($"{drive}");
+        //    }
+        //}
     }
 }
