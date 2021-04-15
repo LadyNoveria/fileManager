@@ -21,6 +21,10 @@ namespace fileManager
             if (directories.Count != 0) 
                 currentDirectory = directories[0];
         }
+        public Directories(string root, int index)
+        {
+            GetRootSubDir(root, index);
+        }
         public string GetRoot()
         {
             return currentDirectory;
@@ -33,11 +37,19 @@ namespace fileManager
                     Console.WriteLine($"{dir}");
             }
         }
-        public void Display(string str)
+        public void GetRootSubDir(string root, int index)
         {
-            foreach (var dir in directories)
+            DirectoryInfo rootDir = new DirectoryInfo(root);
+            DirectoryInfo[] rootroot = rootDir.GetDirectories();
+            string indent = "\t";
+            for (int i = 0; i < index; i++)
             {
-                Console.WriteLine($"{str}{dir}");
+                indent += "\t";
+            }
+            foreach (var dir in rootroot)
+            {
+                directories.Add($"{indent}{dir}");
+                GetRootSubDir(dir.ToString(), index + 1);
             }
         } 
     }

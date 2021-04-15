@@ -9,9 +9,11 @@ namespace fileManager
     {
         private string currentDrive;
         private string root;
-        //private string currentDirectory;
-        //private string currentFile;
-        ////конструктор вызывается, если на диске есть файл с сохраненными параметрами
+        List<string> allDirectories;
+        Directories currectDirectories;
+        Directories rootDirectories;
+        Files allFiles;
+
         //public Tree(string path)
         //{
         //    string[] currentPaths = Deserialize(path);
@@ -34,38 +36,36 @@ namespace fileManager
         //    return currentPaths;
         //}
 
-        ////Вывод на консоль доступных директорий и файлов. 
-        //public void Display()
-        //{
-        //    Console.Clear();
-        //    Drives drives = new Drives(currentDrive);
-        //    Directories directories = new Directories(currentDrive, currentDirectory);
-        //    Files files = new Files(currentDrive, currentFile);
-        //    drives.Display();
-        //    directories.Display();
-        //    files.Display();
-        //    Console.SetCursorPosition(0, 0);
-        //}
-
 
         public Tree() //десериализация пустая
         {
             Drives drives = new Drives();
             currentDrive = drives.GetCurrentDrive();
+            currectDirectories = new Directories(currentDrive);
+            root = currectDirectories.GetRoot();
+            rootDirectories = new Directories(root);
+            
+            allFiles = new Files(root);
         }
         public void Display()
         {
             Console.Clear();
-            Directories currectDirectories = new Directories(currentDrive);
-            root = currectDirectories.GetRoot();
+            
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"| {root}");
+            Console.WriteLine($"{root}");
             Console.ForegroundColor = ConsoleColor.White;
-            Directories rootDirectories = new Directories(root);
-            rootDirectories.Display("\t");
-            Files files = new Files(root);
-            files.Display();
+            
+            rootDirectories.Display(root, 0);
+            allFiles.Display();
             currectDirectories.Display();
+        }
+
+        internal void HandleKey(ConsoleKey key)
+        {
+            if (key == ConsoleKey.DownArrow)
+            {
+
+            }
         }
     }
 }

@@ -27,13 +27,19 @@ namespace fileManager
                 создать парсер команд, который по минимуму использует стандартные методы по строкам.
              */
 
-            Console.SetWindowSize(100, 25);
-            Console.SetBufferSize(100, 25);
+            //Console.SetWindowSize(100, 25);
+            //Console.SetBufferSize(100, 25);
             string lastWay = @"path.json";
             Tree tree = new Tree();
-            
             tree.Display();
-
+            while (true)
+            {
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    tree.HandleKey(key.Key);
+                }
+            }
             Console.ReadKey();
         }
     }

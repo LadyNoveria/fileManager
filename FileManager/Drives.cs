@@ -12,7 +12,7 @@ namespace fileManager
         {
             drivesName = new List<string>();
             GetDrives();
-            currentDrive = drivesName[0];
+            currentDrive = drivesName[1];
         }
         public string GetCurrentDrive()
         {
@@ -30,19 +30,5 @@ namespace fileManager
                 }
             }
         }
-        //public void Display()
-        //{
-        //    foreach (var drive in drivesName)
-        //    {
-        //        if (drive == currentDrive)
-        //        {
-        //            Console.ForegroundColor = ConsoleColor.Red;
-        //            Console.WriteLine(drive);
-        //            Console.ForegroundColor = ConsoleColor.White;
-        //        }
-        //        else
-        //            Console.WriteLine($"{drive}");
-        //    }
-        //}
     }
 }
