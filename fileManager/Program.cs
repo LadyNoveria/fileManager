@@ -40,7 +40,7 @@ namespace fileManager
                     tree.HandleKey(key.Key);
                 }
             }
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 

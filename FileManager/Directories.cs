@@ -6,26 +6,28 @@ namespace fileManager
 {
     class Directories
     {
-        private List<string> directories;
-        private string currentDirectory;
-        private List<string> subDirectories;
-        public Directories(string drive)
+        private NodeLinkedList StartDirectory;
+        //private string currentDirectory;
+        private NodeLinkedList subDirectories;
+        public Directories(NodeLinkedList drive)
         {
-            directories = new List<string>();
-            string[] allDirectories = Directory.GetDirectories(drive);
+            GetDirectories(drive);
+        }
+
+        private void GetDirectories(NodeLinkedList drive)
+        {
+            var path = drive.StartNode.Value;
+            var allDirectories = Directory.GetDirectories(path);
+            var node = new NodeLinkedList();
             for (int i = 0; i < allDirectories.Length; i++)
             {
                 DirectoryInfo dir = new DirectoryInfo(allDirectories[i]);
                 if ((dir.Attributes & FileAttributes.Hidden) == 0)
-                    directories.Add(allDirectories[i]);
+                    node.AddNode(allDirectories[i]);
             }
-            if (directories.Count != 0)
-                currentDirectory = directories[0];
+            StartDirectory = node;
         }
-        public string GetRoot()
-        {
-            return currentDirectory;
-        }
+
         public void Display()
         {
             foreach (var dir in directories)
@@ -41,26 +43,28 @@ namespace fileManager
             //{
             //    indent += "\t";
             //}
-            subDirectories = new List<string>();
-            var rootroot = Directory.GetDirectories(path);
-            foreach (var dir in rootroot)
+            var root = Directory.GetDirectories(path);
+            var node = new NodeLinkedList();
+            foreach (var dir in root)
             {
                 DirectoryInfo info = new DirectoryInfo(dir);
                 if ((info.Attributes & FileAttributes.Hidden) == 0)
                 {
-                    subDirectories.Add($"{dir}");
+                    node.AddNode(dir);
                     GetSubDirs(dir.ToString(), index + 1);
                 }
             }
+            subDirectories = node;
         }
 
-        public List<string> GetDirectoryNames()
+        public NodeLinkedList GetDirectoryNames()
         {
-            return directories;
+            return StartDirectory;
         }
-        public List<string> GetSubDirectories()
+        public NodeLinkedList GetSubDirectories(string path)
         {
-            return;
+            GetSubDirs(path, 0);
+            return subDirectories;
         }
     }
 }

@@ -25,5 +25,9 @@ namespace fileManager
                 Console.WriteLine($"\t{file}");
             }
         }
+        public List<string> GetFiles()
+        {
+            return files;
+        }
     }
 }
