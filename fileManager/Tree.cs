@@ -7,12 +7,13 @@ namespace fileManager
 {
     class Tree
     {
-        List<string> listOfDrives; //диски, готовые к работе
-        Queue<string> listOfDirectories; //директории выбранного диска
-        Queue<string> listOfSubDirectories; //поддиректории
-        List<string> listOfFiles; //файлы
-        string currentDirectory;
+        NodeLinkedList Drives; //диски, готовые к работе
+        NodeLinkedList Directories; //директории выбранного диска
+        NodeLinkedList SubDirectories; //поддиректории
+        NodeLinkedList Files; //файлы
+        NodeLinkedList currentDirectory;//директория, для которой показываются фалйы и папки
 
+        NodeLinkedList CurrentList;
         //public Tree(string path)
         //{
         //    string[] currentPaths = Deserialize(path);
@@ -40,21 +41,22 @@ namespace fileManager
         {
             //получаем список дисков
             Drives drives = new Drives();
-            listOfDrives = drives.GetDriveNames();
+            Drives = drives.GetDriveNames();
 
+            
             //директорией по-умолчанию для отображения назначаем первый диск
-            currentDirectory = listOfDrives[0]; 
+            currentDirectory = Drives; 
 
             //получаем список директорий
             Directories directories = new Directories(currentDirectory);
-            listOfDirectories = directories.GetDirectoryNames();
-
+            Directories = directories.GetDirectoryNames();
+            CurrentList = drives.GetCurrentList(directories);
             //получаем список поддиректорий 
-            listOfSubDirectories = directories.GetSubDirectories();
+            //SubDirectories = directories.GetSubDirectories();
+
             //получаем список файлов выбранного диска listOfDrives[0]
             Files files = new Files(currentDirectory);
-            listOfFiles = files.GetFiles();
-
+            Files = files.GetFiles();
         }
         public void Display()
         {
@@ -70,18 +72,17 @@ namespace fileManager
             //выводим файлы
             Files files = new Files(currentDirectory);
             files.Display();
-            //rootDirectories.Display(root, 0);
-            //allFiles.Display();
-            //currectDirectories.Display();
         }
 
         internal void HandleKey(ConsoleKey key)
         {
             if (key == ConsoleKey.DownArrow)
             {
-                if (listOfSubDirectories != null)
+                if (SubDirectories != null)
                 {
-                    currentDirectory = listOfSubDirectories.Dequeue();
+                    Directories directories = new Directories(currentDirectory);
+                    SubDirectories = directories.GetSubDirectories();
+
                     this.Display();
                 }
                 else

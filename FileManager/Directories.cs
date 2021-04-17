@@ -7,11 +7,12 @@ namespace fileManager
     class Directories
     {
         private NodeLinkedList StartDirectory;
-        //private string currentDirectory;
-        private NodeLinkedList subDirectories;
+        private NodeLinkedList SubDirectories;
+
         public Directories(NodeLinkedList drive)
         {
             GetDirectories(drive);
+            GetSubDirs(StartDirectory.StartNode.Value, 0);
         }
 
         private void GetDirectories(NodeLinkedList drive)
@@ -27,15 +28,6 @@ namespace fileManager
             }
             StartDirectory = node;
         }
-
-        public void Display()
-        {
-            foreach (var dir in directories)
-            {
-                if(dir != currentDirectory)
-                    Console.WriteLine($"{dir}");
-            }
-        }
         public void GetSubDirs(string path, int index)
         {
             //string indent = "\t";
@@ -43,6 +35,7 @@ namespace fileManager
             //{
             //    indent += "\t";
             //}
+
             var root = Directory.GetDirectories(path);
             var node = new NodeLinkedList();
             foreach (var dir in root)
@@ -54,17 +47,24 @@ namespace fileManager
                     GetSubDirs(dir.ToString(), index + 1);
                 }
             }
-            subDirectories = node;
+            SubDirectories = node;
         }
 
         public NodeLinkedList GetDirectoryNames()
         {
             return StartDirectory;
         }
-        public NodeLinkedList GetSubDirectories(string path)
+        public NodeLinkedList GetSubDirectories()
         {
-            GetSubDirs(path, 0);
-            return subDirectories;
+            return SubDirectories;
+        }
+        public void Display()
+        {
+            foreach (var dir in directories)
+            {
+                if (dir != currentDirectory)
+                    Console.WriteLine($"{dir}");
+            }
         }
     }
 }
