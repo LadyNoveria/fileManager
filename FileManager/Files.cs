@@ -6,18 +6,24 @@ namespace fileManager
 {
     class Files
     {
-        private List<string> files;
-        public Files(string directory)
+        private NodeLinkedList Files;
+        public Files(NodeLinkedList directory)
         {
-            files = new List<string>();
+            GetListOfFiles(directory);
+        }
+
+        private static void GetListOfFiles(NodeLinkedList directory)
+        {
+            var path = directory.StartNode.Value;
             string[] allFiles = Directory.GetFiles(directory);
             for (int i = 0; i < allFiles.Length; i++)
             {
                 DirectoryInfo dir = new DirectoryInfo(allFiles[i]);
-                if ((dir.Attributes & FileAttributes.Hidden) == 0) 
-                files.Add(allFiles[i]);
+                if ((dir.Attributes & FileAttributes.Hidden) == 0)
+                    files.Add(allFiles[i]);
             }
         }
+
         public void Display()
         {
             foreach (var file in files)
