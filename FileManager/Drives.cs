@@ -5,19 +5,23 @@ namespace fileManager
 {
     internal class Drives
     {
-        private List<string> drivesName; //список дисков
+        private List<string> driveNames; //список дисков
         public string currentDrive;
 
         public Drives()
         {
-            drivesName = new List<string>();
+            driveNames = new List<string>();
             GetDrives();
-            currentDrive = drivesName[1];
+            currentDrive = driveNames[1];
         }
         public string GetCurrentDrive()
         {
             return currentDrive;
         }
+        public List<string> GetDriveNames()
+        {
+            return driveNames;
+        } 
         //Получение доступных дисков
         private void GetDrives()
         {
@@ -26,7 +30,7 @@ namespace fileManager
             {
                 if (drives[i].IsReady)
                 {
-                    drivesName.Add(drives[i].RootDirectory.Name);
+                    driveNames.Add(drives[i].RootDirectory.Name);
                 }
             }
         }
